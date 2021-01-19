@@ -1,54 +1,88 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
-
+import { FiHome } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
+import { FiBell } from "react-icons/fi";
+import { FiBookmark } from "react-icons/fi";
 import { COLORS } from '../constants';
 import { ReactComponent as Logo } from "../assets/logo.svg";
 
+import { CurrentUserContext } from './CurrentUserContext';
+
 const Sidebar = () => {
+  const { currentUser } = useContext(CurrentUserContext);
+
   return (
     <Wrapper>
-      <Logo />
-      <Menu>
-        <LinkItem>
-          <NavigationLink to="/" exact>Home</NavigationLink>
-        </LinkItem>
-        <LinkItem>
-          <NavigationLink to="/abc" exact>Profile</NavigationLink>
-        </LinkItem>
-        <LinkItem>
-          <NavigationLink to="/notifications" exact>Notifications</NavigationLink>
-        </LinkItem>
-        <LinkItem>
-          <NavigationLink to="/bookmarks" exact>Bookmarks</NavigationLink>
-        </LinkItem>
-      </Menu>
+      <Logo style={{ width: 50 + 'px' }}/>
+      <Nav>
+        <LinkContainer>
+          <NavigationLink to="/" exact>
+            <Icon><FiHome /></Icon>
+            Home
+          </NavigationLink>
+        </LinkContainer>
+        <LinkContainer>
+          <NavigationLink to={currentUser === null ? "/" : "/" +  currentUser}>
+            <Icon><FiUser /></Icon>
+            Profile
+          </NavigationLink>
+        </LinkContainer>
+        <LinkContainer>
+          <NavigationLink to="/notifications">
+            <Icon>
+              <FiBell />
+            </Icon>
+            Notifications
+          </NavigationLink>
+        </LinkContainer>
+        <LinkContainer>
+          <NavigationLink to="/bookmarks">
+            <Icon>
+              <FiBookmark />
+            </Icon>
+            Bookmarks
+          </NavigationLink>
+        </LinkContainer>
+      </Nav>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
   display: inline-block;
-  width: 200px;
+  width: 190px;
   /* border: 1px solid lightgray; */
 `;
 
-const Menu = styled.div`
+const Nav = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
+const LinkContainer = styled.span`
+  margin: 10px 10px 10px 5px;
+`;
+
+const Icon = styled.div`
+  display: inline;
+  margin-right: 20px;
+`;
+
 const NavigationLink = styled(NavLink)`
-  /* default styles here */
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 25px;
+
+  &:hover {
+    color: ${COLORS.primary};
+    background-color: ${COLORS.navBackground};
+  }
 
   &.active {
     color: ${COLORS.primary};
   }
-`;
-
-const LinkItem = styled.div`
-  height: 25px;
-
 `;
 
 export default Sidebar;

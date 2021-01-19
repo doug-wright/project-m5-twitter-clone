@@ -1,25 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useContext }from 'react';
+import { Switch, Route, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 
-import GlobalStyles from "./GlobalStyles";
 import Sidebar from './Sidebar';
 import BookMarks from './Bookmarks';
 import HomeFeed from './HomeFeed';
 import Notifications from './Notifications';
 import Profile from './Profile';
 import TweetDetails from './TweetDetails';
+import ErrorPage from './ErrorPage';
+
+import { CurrentUserContext } from './CurrentUserContext';
 
 const App = () => {
+  const { currentUser, status } = useContext(CurrentUserContext);
   return (
     <>
-      <GlobalStyles />
-      <Router>
-        <Sidebar />
-        <Main>
+      <Sidebar />
+      <Main>
+        {status === 'loading' ? 'Getting current user...' :
         <Switch>
           <Route exact path="/">
             <HomeFeed />
+          </Route>
+          <Route exact path="/error-page">
+            <ErrorPage />
           </Route>
           <Route exact path="/notifications">
             <Notifications />
@@ -33,9 +38,8 @@ const App = () => {
           <Route exact path="/:profileId">
             <Profile />
           </Route>
-        </Switch>
-        </Main>
-      </Router>
+        </Switch>}
+      </Main>
     </>
   )
 }

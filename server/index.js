@@ -5,6 +5,16 @@ const PORT = 31415;
 
 var app = express();
 
+// Added the following because of CORS error in browser
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+})
+
 app.use(express.json());
 
 app.use(require('./routes/profile'));
