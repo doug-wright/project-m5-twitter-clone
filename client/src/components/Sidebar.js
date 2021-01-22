@@ -24,7 +24,7 @@ const Sidebar = () => {
           </NavigationLink>
         </LinkContainer>
         <LinkContainer>
-          <NavigationLink to={currentUser === null ? "/" : "/" +  currentUser}>
+          <NavigationLink to={currentUser === null ? "/" : "/" +  currentUser.handle}>
             <Icon><FiUser /></Icon>
             Profile
           </NavigationLink>
@@ -51,7 +51,6 @@ const Sidebar = () => {
 }
 
 const Wrapper = styled.div`
-  display: inline-block;
   width: 190px;
   /* border: 1px solid lightgray; */
 `;
@@ -77,7 +76,7 @@ const NavigationLink = styled(NavLink)`
 
   &:hover {
     color: ${COLORS.primary};
-    background-color: ${COLORS.navBackground};
+    background-color: ${COLORS.btnBackground};
   }
 
   &.active {

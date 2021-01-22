@@ -1,18 +1,18 @@
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const CurrentUserContext = createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = React.useState(null);
-  const [status, setStatus] = React.useState("loading");
+  const [currentUser, setCurrentUser] = useState(null);
+  const [status, setStatus] = useState("loading");
 
   // Fetch the user data from the API (/me/profile)
   useEffect(() => {
     fetch('http://localhost:31415/api/me/profile')
       .then((res) => res.json())
       .then((json) => {
+        setCurrentUser(json.profile);
         setStatus('idle');
-        setCurrentUser(json.profile.handle);
       })
       .catch(() => {
         window.location.href = 'http://localhost:3000/error-page';
@@ -20,7 +20,7 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, status }}>
+    <CurrentUserContext.Provider value={{currentUser, status, setStatus}}>
       {children}
     </CurrentUserContext.Provider>
   );
