@@ -2,12 +2,15 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
+import { CurrentUserContext } from './CurrentUserContext';
+
 import Spinner from './Spinner';
 import TweetItem from './TweetItem';
 
 const HomeFeed = () => {
   const [tweets, setTweets] = useState({});
   const [homeFeedStatus, setHomeFeedStatus] = useState('loading');
+  const { renderHomeFeed } = useContext(CurrentUserContext);
 
   // Fetch the home feed
   useEffect(() => {
@@ -20,7 +23,7 @@ const HomeFeed = () => {
       .catch(() => {
         window.location.href = 'http://localhost:3000/error-page';
       });
-  }, []);
+  }, [renderHomeFeed]);
 
   return (
     <>

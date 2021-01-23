@@ -5,18 +5,43 @@ import { CurrentUserContext } from './CurrentUserContext';
 import { COLORS } from '../constants';
 
 const PostTweet = () => {
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser, renderHomeFeed, setRenderHomeFeed } = useContext(CurrentUserContext);
   const [value, setValue] = useState('');
   
-  let inputRemaining = 280 - value.length;
+  const inputRemaining = 280 - value.length;
+  let btnDisabled = false;
 
   const handleInput = (event) => {
     setValue(event.target.value);
   }
 
   const handleClick = () => {
-    console.log(value);
-    setValue('');
+    fetch('http://localhost:3000/api/tweet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: value })
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (renderHomeFeed) {
+          setRenderHomeFeed(false);
+        } else {
+          setRenderHomeFeed(true);
+        }
+        
+        setValue('');
+      })
+      .catch(() => {
+        // history.push({
+        //   pathname: '/error-page',
+        //   state: 'Component: index, Cannot contact server'
+        // });
+      });
+
+  }
+
+  if (inputRemaining < 0) {
+    btnDisabled = true;
   }
 
   return (
@@ -25,11 +50,18 @@ const PostTweet = () => {
         <AvatarImg src={currentUser.avatarSrc} />
       </AvatarArea>
       <InputArea>
-        <TextArea onChange={handleInput} placeholder="What's happening?" value={value} rows="6" cols="50" maxLength="290" />
+        <TextArea
+          onChange={handleInput}
+          placeholder="What's happening?"
+          value={value}
+          rows="6"
+          cols="50"
+          maxLength="290"
+        />
       </InputArea>
       <ButtonArea>
         <Counter inputRemaining={inputRemaining}>{inputRemaining}</Counter>
-        <Button onClick={handleClick}>Meow</Button>
+        <Button onClick={handleClick} disabled={btnDisabled} state={btnDisabled}>Meow</Button>
       </ButtonArea>
     </Wrapper>
   );
@@ -79,7 +111,7 @@ const Button = styled.button`
   border: none;
   color: white;
   font-weight: bold;
-  background-color: ${COLORS.primary};
+  background-color: ${props => props.state ? COLORS.btnBackground : COLORS.primary};
   cursor: pointer;
 `;
 
