@@ -3,10 +3,12 @@ import styled from 'styled-components';
 
 import { CurrentUserContext } from './CurrentUserContext';
 import { COLORS } from '../constants';
+import Spinner from './Spinner';
 
 const PostTweet = () => {
   const { currentUser, renderHomeFeed, setRenderHomeFeed } = useContext(CurrentUserContext);
   const [value, setValue] = useState('');
+  const [postTweetStatus, setPostTweetStatus] = useState('idle');
   
   const inputRemaining = 280 - value.length;
   let btnDisabled = false;
@@ -16,6 +18,8 @@ const PostTweet = () => {
   }
 
   const handleClick = () => {
+    btnDisabled = true;
+    setPostTweetStatus('loading');
     fetch('http://localhost:3000/api/tweet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -23,6 +27,7 @@ const PostTweet = () => {
     })
       .then((res) => res.json())
       .then((json) => {
+        setPostTweetStatus('idle');
         if (renderHomeFeed) {
           setRenderHomeFeed(false);
         } else {
@@ -32,6 +37,7 @@ const PostTweet = () => {
         setValue('');
       })
       .catch(() => {
+        setPostTweetStatus('idle');
         // history.push({
         //   pathname: '/error-page',
         //   state: 'Component: index, Cannot contact server'
@@ -40,7 +46,7 @@ const PostTweet = () => {
 
   }
 
-  if (inputRemaining < 0) {
+  if (inputRemaining < 0 || inputRemaining === 280) {
     btnDisabled = true;
   }
 
@@ -61,7 +67,9 @@ const PostTweet = () => {
       </InputArea>
       <ButtonArea>
         <Counter inputRemaining={inputRemaining}>{inputRemaining}</Counter>
-        <Button onClick={handleClick} disabled={btnDisabled} state={btnDisabled}>Meow</Button>
+        <Button onClick={handleClick} disabled={btnDisabled} state={btnDisabled}>
+          {postTweetStatus === 'loading' ? 'Posting' : 'Meow'}
+        </Button>
       </ButtonArea>
     </Wrapper>
   );

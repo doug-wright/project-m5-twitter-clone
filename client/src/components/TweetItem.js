@@ -18,11 +18,11 @@ const TweetItem = ({ tweet }) => {
       }
       <TweetHeader>
         <AvatarImg src={tweet.author.avatarSrc} />
-        <TweetDetails>
+        <Details>
           <DisplayName>{tweet.author.displayName}</DisplayName>
           &nbsp;@{tweet.author.handle} - {moment(tweet.timestamp).format('MMM Do')}
           <p>{tweet.status}</p>
-        </TweetDetails>
+        </Details>
       </TweetHeader>
       {(tweet.media.length > 0) ? <Media media={tweet.media}/> : null}
       <Separator />
@@ -67,7 +67,7 @@ const AvatarImg = styled.img`
   margin-right: 10px;
 `;
 
-const TweetDetails = styled.div`
+const Details = styled.div`
   display: inline;
   width: 500px;
   font-size: 0.8rem;

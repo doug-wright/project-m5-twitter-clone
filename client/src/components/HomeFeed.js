@@ -28,7 +28,7 @@ const HomeFeed = () => {
   return (
     <>
       {homeFeedStatus === 'loading' ?
-        <Spinner />
+        <Spinner scale="1.5" />
       : 
         <>
           {tweets.tweetIds.map(id => <TweetItem

@@ -21,7 +21,7 @@ const App = () => {
       <Sidebar />
       <Main>
         {status === 'loading' ?
-          <Spinner />
+          <Spinner scale="1.5" />
         :
           <Switch>
             <Route exact path="/">
@@ -56,8 +56,9 @@ const Wrapper = styled.div`
 `;
 
 const Main = styled.div`
-  flex: 1 0 auto;
-  /* border: 1px solid lightgray; */
+  width: 550px;
+  /* flex: 1 0 auto; */
+  /* border: 1px solid red; */
 `;
 
 const PageTitle = styled.div`
