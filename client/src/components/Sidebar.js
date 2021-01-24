@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
-import { FiHome } from "react-icons/fi";
-import { FiUser } from "react-icons/fi";
-import { FiBell } from "react-icons/fi";
-import { FiBookmark } from "react-icons/fi";
+import { FiHome, FiUser, FiBell,FiBookmark } from "react-icons/fi";
 import { COLORS } from '../constants';
 import { ReactComponent as Logo } from "../assets/logo.svg";
 

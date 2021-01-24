@@ -30,7 +30,7 @@ const users = {
     handle: 'giantcat9',
     displayName: 'Giant Military Cats',
     avatarSrc: '/assets/giantcat9-avatar.jpg',
-    bannerSrc: '/assets/giantcat9-banner.jpg',
+    bannerSrc: '/assets/giantcat9-banner.jpeg',
     location: undefined,
     url: undefined,
     joined: '2019-09-01T18:00',
