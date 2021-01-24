@@ -4,6 +4,7 @@ import { FiRepeat } from "react-icons/fi";
 import moment from 'moment';
 
 import Media from './Media';
+import TweetActions from './TweetActions';
 
 const TweetItem = ({ tweet }) => {
   return (
@@ -25,6 +26,7 @@ const TweetItem = ({ tweet }) => {
         </Details>
       </TweetHeader>
       {(tweet.media.length > 0) ? <Media media={tweet.media}/> : null}
+      <TweetActions />
       <Separator />
     </Wrapper>
   );
