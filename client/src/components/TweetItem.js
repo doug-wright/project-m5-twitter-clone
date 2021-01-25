@@ -26,7 +26,13 @@ const TweetItem = ({ tweet }) => {
         </Details>
       </TweetHeader>
       {(tweet.media.length > 0) ? <Media media={tweet.media}/> : null}
-      <TweetActions />
+      <TweetActions
+        id={tweet.id}
+        isLiked={tweet.isLiked}
+        isRetweeted={tweet.isRetweeted}
+        numLikes={tweet.numLikes}
+        numRetweets={tweet.numRetweets}
+      />
       <Separator />
     </Wrapper>
   );

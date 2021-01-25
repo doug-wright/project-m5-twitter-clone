@@ -15,7 +15,8 @@ export const CurrentUserProvider = ({ children }) => {
         setCurrentUser(json.profile);
         setStatus('idle');
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         window.location.href = 'http://localhost:3000/error-page';
       });
   }, []);
