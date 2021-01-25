@@ -26,6 +26,7 @@ const TweetItem = ({ tweet }) => {
         </Details>
       </TweetHeader>
       {(tweet.media.length > 0) ? <Media media={tweet.media}/> : null}
+      <ActionContainer>
       <TweetActions
         id={tweet.id}
         isLiked={tweet.isLiked}
@@ -33,6 +34,7 @@ const TweetItem = ({ tweet }) => {
         numLikes={tweet.numLikes}
         numRetweets={tweet.numRetweets}
       />
+      </ActionContainer>
       <Separator />
     </Wrapper>
   );
@@ -83,6 +85,12 @@ const Details = styled.div`
 
 const DisplayName = styled.span`
   font-weight: bold;
+`;
+
+const ActionContainer = styled.div`
+  width: 500px;
+  position: relative;
+  left: 50px;
 `;
 
 export default TweetItem;

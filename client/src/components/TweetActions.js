@@ -70,11 +70,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  position: relative;
-  left: 50px;
-  width: 500px;
   height: 50px;
-  /* border: 1px solid red; */
 `;
 
 const Action = styled.div`
@@ -136,8 +132,8 @@ const HeartBtn = styled.button`
 `;
 
 const HeartIcon = styled(FiHeart)`
-  color: ${props => (props.liked === 'true') ? 'red' : 'black'};
-  fill: ${props => (props.liked === 'true') ? 'red' : null};
+  color: ${props => (props.liked === 'true') ? COLORS.heartLiked : 'black'};
+  fill: ${props => (props.liked === 'true') ? COLORS.heartLiked : null};
 `;
 
 const UploadBtn = styled.button`

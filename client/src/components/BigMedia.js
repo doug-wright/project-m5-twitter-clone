@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
-const Media = ({ media }) => {
+const BigMedia = ({ media }) => {
   return (
     <>
       {Object.values(media).map(value => {
@@ -17,10 +17,8 @@ const Media = ({ media }) => {
 }
 
 const Img = styled.img`
-  width: 500px;
-  position: relative;
-  left: 50px;
+  width: 550px;
   border-radius: 20px;
 `;
 
-export default Media;
+export default BigMedia;

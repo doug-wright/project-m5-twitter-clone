@@ -5,5 +5,6 @@ export const COLORS = {
   messageCircleBtnBg: '#d3c8f3',
   repeatBtnBg: '#dde1e6',
   heartBtnBg: '#f8cfd5',
-  uploadBtnBg: '#dacffb'
+  uploadBtnBg: '#dacffb',
+  heartLiked: '#c53434'
 };
