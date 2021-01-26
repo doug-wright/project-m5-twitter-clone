@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { FiMessageCircle, FiRepeat, FiHeart, FiUpload } from "react-icons/fi";
 
 import { COLORS } from '../constants';
 
-const TweetActions = ({ id, isLiked, isRetweeted, numLikes, numRetweets }) => {
+const TweetActions = ({ id, isLiked, isRetweeted, numLikes, numRetweets}) => {
   const [likes, setLikes] = useState(numLikes);
   const [liked, setLiked] = useState(isLiked);
+  const messageCircleBtnRef = useRef(null);
+  const repeatBtnRef = useRef(null);
+  const heartBtnRef = useRef(null);
+  const uploadBtnRef = useRef(null);
+
+  const handleMessageCircleClick = () => {
+    messageCircleBtnRef.current.blur();
+  }
+
+  const handleRepeatClick = () => {
+    repeatBtnRef.current.blur();
+  }
   
-  const handleLikeClick = (event) => {
+  const handleHeartClick = (event) => {
     const tweetId = event.currentTarget.attributes.id.value;
     let jsonBody = {};
+
+    heartBtnRef.current.blur();
 
     if (liked) {
       jsonBody = { like: false };
@@ -38,27 +52,31 @@ const TweetActions = ({ id, isLiked, isRetweeted, numLikes, numRetweets }) => {
       });
   }
 
+  const handleUploadClick = () => {
+    uploadBtnRef.current.blur();
+  }
+
   return (
     <Wrapper>
       <Action>
-        <MessageCircleBtn>
+        <MessageCircleBtn ref={messageCircleBtnRef} onClick={handleMessageCircleClick}>
           <FiMessageCircle />
         </MessageCircleBtn>
       </Action>
       <Action>
-        <RepeatBtn>
+        <RepeatBtn ref={repeatBtnRef} onClick={handleRepeatClick}>
           <FiRepeat />
         </RepeatBtn>
         <Count style={numRetweets === 0 ? { visibility: 'hidden'} : null}>{numRetweets}</Count>
       </Action>
       <Action>
-        <HeartBtn id={id} onClick={handleLikeClick}>
+        <HeartBtn ref={heartBtnRef} id={id} onClick={handleHeartClick}>
           <HeartIcon liked={liked.toString()} />
         </HeartBtn>
         <Count style={likes === 0 ? { visibility: 'hidden'} : null}>{likes}</Count>
       </Action>
       <Action>
-        <UploadBtn>
+        <UploadBtn ref={uploadBtnRef} onClick={handleUploadClick}>
           <FiUpload />
         </UploadBtn>
       </Action>
@@ -92,7 +110,7 @@ const MessageCircleBtn = styled.button`
   background-color: white;
   cursor: pointer;
 
-  &:hover {
+  &:hover, :focus {
     background-color: ${COLORS.messageCircleBtnBg};
   }
 `;
@@ -109,9 +127,10 @@ const RepeatBtn = styled.button`
   background-color: white;
   cursor: pointer;
 
-  &:hover {
+  &:hover, :focus {
     background-color: ${COLORS.repeatBtnBg};
   }
+
 `;
 
 const HeartBtn = styled.button`
@@ -126,7 +145,7 @@ const HeartBtn = styled.button`
   background-color: white;
   cursor: pointer;
 
-  &:hover {
+  &:hover, :focus {
     background-color: ${COLORS.heartBtnBg};
   }
 `;
@@ -148,7 +167,7 @@ const UploadBtn = styled.button`
   background-color: white;
   cursor: pointer;
 
-  &:hover {
+  &:hover, :focus {
     background-color: ${COLORS.uploadBtnBg};
   }
 `;

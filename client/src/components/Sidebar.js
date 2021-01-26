@@ -71,7 +71,7 @@ const NavigationLink = styled(NavLink)`
   padding: 10px;
   border-radius: 25px;
 
-  &:hover {
+  &:hover, :focus {
     color: ${COLORS.primary};
     background-color: ${COLORS.btnBackground};
   }

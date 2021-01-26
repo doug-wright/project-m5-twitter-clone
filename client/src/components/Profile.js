@@ -204,7 +204,7 @@ const MenuTab = styled.button`
   outline: none;
   cursor: pointer;
 
-  &:hover {
+  &:hover, :focus {
     color: ${COLORS.primary};
     background-color: ${COLORS.btnBackground};
   }

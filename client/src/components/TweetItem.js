@@ -2,13 +2,49 @@ import React from 'react';
 import styled from 'styled-components';
 import { FiRepeat } from "react-icons/fi";
 import moment from 'moment';
+import { useHistory } from "react-router-dom";
 
 import Media from './Media';
 import TweetActions from './TweetActions';
 
 const TweetItem = ({ tweet }) => {
+  const history = useHistory();
+
+  const getNested = (obj, ...args) => {
+    return args.reduce((obj, level) => obj && obj[level], obj)
+  }
+
+  const handleClick = (event) => {
+    const localName = event.target.localName;
+
+    // event.target.blur();
+    // event.target.parentElement.blur();
+
+    if (getNested(event, 'target', 'attributes', 'target', 'value') === 'displayName') {
+      history.push({ pathname: '/' + tweet.author.handle});
+    } else {
+      if (localName === 'div' || localName === 'img' || localName === 'p') {
+        history.push({ pathname: '/tweet/' + tweet.id });
+      }
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.code === 'Enter') {
+      const localName = event.target.localName;
+
+      if (getNested(event, 'target', 'attributes', 'target', 'value') === 'displayName') {
+        history.push({ pathname: '/' + tweet.author.handle});
+      } else {
+        if (localName === 'div' || localName === 'img' || localName === 'p') {
+          history.push({ pathname: '/tweet/' + tweet.id });
+        }
+      }
+    } 
+  }
+
   return (
-    <Wrapper>
+    <Wrapper tabIndex="0" onClick={handleClick} onKeyDown={handleKeyDown}>
       {(tweet.hasOwnProperty('retweetFrom')) ? 
         <RetweetFrom>
           <RepeatIcon />
@@ -20,7 +56,7 @@ const TweetItem = ({ tweet }) => {
       <TweetHeader>
         <AvatarImg src={tweet.author.avatarSrc} />
         <Details>
-          <DisplayName>{tweet.author.displayName}</DisplayName>
+          <DisplayName target="displayName" tabIndex="0">{tweet.author.displayName}</DisplayName>
           &nbsp;@{tweet.author.handle} - {moment(tweet.timestamp).format('MMM Do')}
           <p>{tweet.status}</p>
         </Details>
@@ -42,6 +78,7 @@ const TweetItem = ({ tweet }) => {
 
 const Wrapper = styled.div`
   margin-top: 10px;
+  cursor: pointer;
 `;
 
 const Separator = styled.div`
