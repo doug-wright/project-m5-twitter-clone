@@ -8,12 +8,12 @@ import GlobalStyles from "./components/GlobalStyles";
 
 ReactDOM.render(
   <React.StrictMode>
-    <CurrentUserProvider>
-      <GlobalStyles />
-      <Router>
-        <App />
-      </Router>
-    </CurrentUserProvider>
+    <Router>
+      <CurrentUserProvider>
+        <GlobalStyles />
+          <App />
+      </CurrentUserProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

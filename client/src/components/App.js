@@ -16,6 +16,8 @@ import { CurrentUserContext } from './CurrentUserContext';
 
 const App = () => {
   const { currentUser, status } = useContext(CurrentUserContext);
+
+  if (status !== 'error') {
   return (
     <Wrapper>
       <Sidebar />
@@ -24,31 +26,43 @@ const App = () => {
           <Spinner scale="1.5" />
         :
           <Switch>
+            <Route exact path="/error-page">
+              <ErrorPage />
+            </Route>
             <Route exact path="/">
               <PageTitle>Home</PageTitle>
               <PostTweet />
               <HomeFeed />
             </Route>
-            <Route exact path="/error-page">
-              <ErrorPage />
-            </Route>
-            <Route exact path="/notifications">
+            <Route path="/notifications">
               <Notifications />
             </Route>
-            <Route exact path="/bookmarks">
+            <Route path="/bookmarks">
               <BookMarks />
             </Route>
-            <Route exact path="/tweet/:tweetId">
-              <TweetDetails />
-            </Route>
-            <Route exact path="/:profileId">
+            <Route path="/:profileId">
               <Profile />
+            </Route>
+            <Route path="/tweet/:tweetId">
+              <TweetDetails />
             </Route>
           </Switch>
         }
       </Main>
     </Wrapper>
   )
+      } else {
+        return (
+          <Wrapper>
+            <Sidebar />
+            <Main>
+              <Route exact path="/error-page">
+                <ErrorPage />
+              </Route>
+            </Main>
+          </Wrapper>
+        );
+      }
 }
 
 const Wrapper = styled.div`

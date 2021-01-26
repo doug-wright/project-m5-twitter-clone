@@ -44,78 +44,76 @@ const Profile = () => {
     setMenuTab(event.target.id);
   }
 
-  if (user.hasOwnProperty('profile')) {
-    return (
-      <>
-        <ProfileHeader>
-          <BannerImg src={user.profile.bannerSrc} />
-          <AvatarImg src={user.profile.avatarSrc} />
-          <FollowingButton>Following</FollowingButton>
-        </ProfileHeader>
-        <ProfileDetails>
-          <DisplayName>{user.profile.displayName}</DisplayName>
-          <br />@{user.profile.handle}
-          {user.profile.isFollowingYou ?
-            <FollowsYou>Follows you</FollowsYou>
-          :
-            null
-          }
-          <p><StyleBold>{user.profile.bio}</StyleBold></p>
-          <LocationJoined>
-            <MapPinIcon />{user.profile.location}
-            <CalendarIcon />Joined {moment(user.profile.joined).format('MMMM YYYY')}
-          </LocationJoined>
-          <p>
-            <StyleBold>{user.profile.numFollowing}</StyleBold> Following&nbsp;&nbsp;&nbsp;
-            <StyleBold>{user.profile.numFollowers}</StyleBold> Followers
-          </p>
-        </ProfileDetails>
-        <NavBar>
-          <MenuTab id="tweets" onClick={handleButtonClick} className={menuTab === 'tweets' ? 'selected' : 'notSelected'}>
-            Tweets
-          </MenuTab>
-          <MenuTab id="media" onClick={handleButtonClick} className={menuTab === 'media' ? 'selected' : 'notSelected'}>
-            Media
-          </MenuTab>
-          <MenuTab id="likes" onClick={handleButtonClick} className={menuTab === 'likes' ? 'selected' : 'notSelected'}>
-            Likes
-          </MenuTab>
-        </NavBar>
-        {(() => {
-          if (menuTab === 'tweets') {
-            return (
-              <>
-              {profileFeedStatus === 'loading' ?
-                <Spinner scale="1.5" />
-              : 
+  return (
+    <>
+      {profileFeedStatus === 'loading' ?
+        <Spinner scale="1.5" />
+      :
+        <>
+          <ProfileHeader>
+            <BannerImg src={user.profile.bannerSrc} />
+            <AvatarImg src={user.profile.avatarSrc} />
+            <FollowingButton>Following</FollowingButton>
+          </ProfileHeader>
+          <ProfileDetails>
+            <DisplayName>{user.profile.displayName}</DisplayName>
+            <br />@{user.profile.handle}
+            {user.profile.isFollowingYou ?
+              <FollowsYou>Follows you</FollowsYou>
+            :
+              null
+            }
+            <p><StyleBold>{user.profile.bio}</StyleBold></p>
+            <LocationJoined>
+              <MapPinIcon />{user.profile.location}
+              <CalendarIcon />Joined {moment(user.profile.joined).format('MMMM YYYY')}
+            </LocationJoined>
+            <p>
+              <StyleBold>{user.profile.numFollowing}</StyleBold> Following&nbsp;&nbsp;&nbsp;
+              <StyleBold>{user.profile.numFollowers}</StyleBold> Followers
+            </p>
+          </ProfileDetails>
+          <NavBar>
+            <MenuTab id="tweets" onClick={handleButtonClick} className={menuTab === 'tweets' ? 'selected' : 'notSelected'}>
+              Tweets
+            </MenuTab>
+            <MenuTab id="media" onClick={handleButtonClick} className={menuTab === 'media' ? 'selected' : 'notSelected'}>
+              Media
+            </MenuTab>
+            <MenuTab id="likes" onClick={handleButtonClick} className={menuTab === 'likes' ? 'selected' : 'notSelected'}>
+              Likes
+            </MenuTab>
+          </NavBar>
+          {(() => {
+            if (menuTab === 'tweets') {
+              return (
                 <>
-                  {tweets.tweetIds.map(id => <TweetItem
-                    key={uuidv4()}
-                    tweet={tweets.tweetsById[id]}
-                  />)}
-                </>
+                {profileFeedStatus === 'loading' ?
+                  <Spinner scale="1.5" />
+                : 
+                  <>
+                    {tweets.tweetIds.map(id => <TweetItem
+                      key={uuidv4()}
+                      tweet={tweets.tweetsById[id]}
+                    />)}
+                  </>
+                }
+              </>
+              );
               }
-            </>
-            );
-          }
 
-          if (menuTab === 'media') {
-            return 'Render media';
-          }
+            if (menuTab === 'media') {
+              return 'Render media';
+            }
 
-          if (menuTab === 'likes') {
-            return 'Render likes';
-          }
-        })()}
+            if (menuTab === 'likes') {
+              return 'Render likes';
+            }
+          })()}
       </>
-    );
-  } else {
-    return (
-      <>
-        Sorry, but user {profileId} does not exist.
-      </>
-    );
-  }
+    }
+    </>
+  );
 }
 
 const ProfileHeader = styled.div`

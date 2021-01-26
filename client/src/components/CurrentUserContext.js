@@ -1,8 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export const CurrentUserContext = createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
+  const history = useHistory();
   const [currentUser, setCurrentUser] = useState(null);
   const [status, setStatus] = useState("loading");
   const [renderHomeFeed, setRenderHomeFeed] = useState(false);
@@ -15,9 +17,10 @@ export const CurrentUserProvider = ({ children }) => {
         setCurrentUser(json.profile);
         setStatus('idle');
       })
-      .catch((error) => {
-        console.log(error);
-        window.location.href = 'http://localhost:3000/error-page';
+      .catch(() => {
+        console.log('fetch error in CurrentUserContext');
+        setStatus('error');
+        history.push({ pathname: '/error-page'});
       });
   }, []);
 
