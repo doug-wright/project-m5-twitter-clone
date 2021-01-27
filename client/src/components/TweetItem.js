@@ -17,9 +17,6 @@ const TweetItem = ({ tweet }) => {
   const handleClick = (event) => {
     const localName = event.target.localName;
 
-    // event.target.blur();
-    // event.target.parentElement.blur();
-
     if (getNested(event, 'target', 'attributes', 'target', 'value') === 'displayName') {
       history.push({ pathname: '/' + tweet.author.handle});
     } else {

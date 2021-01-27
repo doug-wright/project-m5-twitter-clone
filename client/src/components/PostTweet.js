@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom'
 
 import { CurrentUserContext } from './CurrentUserContext';
 import { COLORS } from '../constants';
 import Spinner from './Spinner';
 
 const PostTweet = () => {
+  const history = useHistory();
   const { currentUser, renderHomeFeed, setRenderHomeFeed } = useContext(CurrentUserContext);
   const [value, setValue] = useState('');
   const [postTweetStatus, setPostTweetStatus] = useState('idle');
@@ -38,10 +40,10 @@ const PostTweet = () => {
       })
       .catch(() => {
         setPostTweetStatus('idle');
-        // history.push({
-        //   pathname: '/error-page',
-        //   state: 'Component: index, Cannot contact server'
-        // });
+        history.push({
+          pathname: '/error-page',
+          state: 'An error occured while trying to post your tweet'
+        });
       });
 
   }

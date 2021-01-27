@@ -66,13 +66,12 @@ const App = () => {
 }
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 180px 550px;
 `;
 
 const Main = styled.div`
-  width: 550px;
-  /* flex: 1 0 auto; */
-  /* border: 1px solid red; */
+
 `;
 
 const PageTitle = styled.div`

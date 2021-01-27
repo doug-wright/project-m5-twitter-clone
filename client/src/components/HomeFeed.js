@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,6 +9,7 @@ import Spinner from './Spinner';
 import TweetItem from './TweetItem';
 
 const HomeFeed = () => {
+  const history = useHistory();
   const [tweets, setTweets] = useState({});
   const [homeFeedStatus, setHomeFeedStatus] = useState('loading');
   const { renderHomeFeed } = useContext(CurrentUserContext);
@@ -21,7 +23,10 @@ const HomeFeed = () => {
         setHomeFeedStatus('idle');
       })
       .catch(() => {
-        window.location.href = 'http://localhost:3000/error-page';
+        history.push({
+          pathname: '/error-page',
+          state: 'An error occured accessing your home feed'
+        });
       });
   }, [renderHomeFeed]);
 

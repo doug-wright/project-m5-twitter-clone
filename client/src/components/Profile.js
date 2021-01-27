@@ -1,5 +1,5 @@
 import React, { useEffect, useState }from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { FiMapPin, FiCalendar } from "react-icons/fi";
 import moment from 'moment';
@@ -10,6 +10,7 @@ import TweetItem from './TweetItem';
 import Spinner from './Spinner';
 
 const Profile = () => {
+  const history = useHistory();
   const { profileId } = useParams();
   const [user, setUser] = useState({});
   const [menuTab, setMenuTab] = useState('tweets');
@@ -21,23 +22,37 @@ const Profile = () => {
     fetch('http://localhost:31415/api/' + profileId + '/profile')
       .then((res) => res.json())
       .then((json) => {
-        setUser(json);
-
-        // Get the user's tweets
-        fetch('http://localhost:31415/api/' + profileId + '/feed')
-        .then((res) => res.json())
-        .then((json) => {
-          setTweets(json);
-          setProfileFeedStatus('idle');
-        })
-        .catch(() => {
-          console.log('an error occured getting feed');
-        });
+        if (json.hasOwnProperty('error')) {
+          if (json.error === 'user-not-found') {
+            history.push({
+              pathname: 'error-page',
+              state: 'The requested profile does not exist'
+            });
+          }
+        } else {
+          setUser(json);
+          
+          // Get the user's tweets
+          fetch('http://localhost:31415/api/' + profileId + '/feed')
+          .then((res) => res.json())
+          .then((json) => {
+            setTweets(json);
+            setProfileFeedStatus('idle');
+          })
+          .catch(() => {
+            history.push({
+              pathname: '/error-page',
+              state: 'An error occured accessing your profile feed'
+            })
+          });
+        }
       })
       .catch(() => {
-        console.log('an error occured getting profile');
+        history.push({
+          pathname: '/error-page',
+          state: 'An error occured accessing your profile'
+        })
       });
-
   }, [profileId]);
 
   const handleButtonClick = (event) => {
@@ -65,7 +80,11 @@ const Profile = () => {
             }
             <p><StyleBold>{user.profile.bio}</StyleBold></p>
             <LocationJoined>
-              <MapPinIcon />{user.profile.location}
+              {user.profile.hasOwnProperty('location') ?
+                <><MapPinIcon />{user.profile.location}&nbsp;&nbsp;</>
+              :
+                null
+              }
               <CalendarIcon />Joined {moment(user.profile.joined).format('MMMM YYYY')}
             </LocationJoined>
             <p>
@@ -180,7 +199,7 @@ const MapPinIcon = styled(FiMapPin)`
 `;
 
 const CalendarIcon = styled(FiCalendar)`
-  margin-left: 17px;
+  /* margin-left: 17px; */
   margin-right: 7px;
 `;
 

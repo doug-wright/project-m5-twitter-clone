@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiMessageCircle, FiRepeat, FiHeart, FiUpload } from "react-icons/fi";
 
 import { COLORS } from '../constants';
 
 const TweetActions = ({ id, isLiked, isRetweeted, numLikes, numRetweets}) => {
+  const history = useHistory();
   const [likes, setLikes] = useState(numLikes);
   const [liked, setLiked] = useState(isLiked);
   const messageCircleBtnRef = useRef(null);
@@ -48,7 +50,10 @@ const TweetActions = ({ id, isLiked, isRetweeted, numLikes, numRetweets}) => {
         }
       })
       .catch(() => {
-        // do something if error
+        history.push({
+          pathname: '/error-page',
+          state: 'An error occured liking or unliking a meow'
+        })
       });
   }
 

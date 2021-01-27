@@ -48,8 +48,7 @@ const Sidebar = () => {
 }
 
 const Wrapper = styled.div`
-  width: 190px;
-  /* border: 1px solid lightgray; */
+
 `;
 
 const Nav = styled.div`

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import moment from 'moment';
 
@@ -8,6 +8,7 @@ import BigMedia from './BigMedia';
 import TweetActions from './TweetActions';
 
 const TweetDetails = () => {
+  const history = useHistory();
   const { tweetId } = useParams();
   const [tweet, setTweet] = useState({});
   const [tweetStatus, setTweetStatus] = useState('loading');
@@ -20,7 +21,10 @@ const TweetDetails = () => {
         setTweetStatus('idle');
       })
       .catch(() => {
-        window.location.href = 'http://localhost:3000/error-page';
+        history.push({
+          pathname: '/error-page',
+          state: 'An error occured accessing the requested meow'
+        })
       });
   }, []);
 

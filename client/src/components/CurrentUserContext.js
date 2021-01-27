@@ -20,7 +20,10 @@ export const CurrentUserProvider = ({ children }) => {
       .catch(() => {
         console.log('fetch error in CurrentUserContext');
         setStatus('error');
-        history.push({ pathname: '/error-page'});
+        history.push({
+          pathname: '/error-page',
+          state: 'An error occured accessing your profile'
+        });
       });
   }, []);
 
