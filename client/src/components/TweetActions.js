@@ -34,6 +34,7 @@ const TweetActions = ({ id, isLiked, isRetweeted, numLikes, numRetweets}) => {
       jsonBody = { like: true };
     }
 
+    // Send like/unlink to server
     fetch('/api/tweet/' + tweetId + '/like', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },

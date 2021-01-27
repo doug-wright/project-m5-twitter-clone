@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { CurrentUserContext } from './CurrentUserContext';
@@ -28,7 +27,7 @@ const HomeFeed = () => {
           state: 'An error occured accessing your home feed'
         });
       });
-  }, [renderHomeFeed]);
+  }, [renderHomeFeed, history]);
 
   return (
     <>

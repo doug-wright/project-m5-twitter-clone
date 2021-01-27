@@ -13,6 +13,7 @@ const TweetDetails = () => {
   const [tweet, setTweet] = useState({});
   const [tweetStatus, setTweetStatus] = useState('loading');
 
+  // Fetch a specific tweet
   useEffect(() => {
     fetch('http://localhost:31415/api/tweet/' + tweetId)
       .then((res) => res.json())
@@ -26,7 +27,7 @@ const TweetDetails = () => {
           state: 'An error occured accessing the requested meow'
         })
       });
-  }, []);
+  }, [history, tweetId]);
 
   return (
     <>
@@ -70,7 +71,6 @@ const Header = styled.div`
 const Details = styled.div`
   display: inline;
   width: 500px;
-  /* font-size: 0.8rem; */
 `;
 
 const AvatarImg = styled.img`
@@ -94,6 +94,7 @@ const Status = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 5px;
+  word-wrap: break-word;
 `;
 
 const TimeStamp = styled.div`

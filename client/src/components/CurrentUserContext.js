@@ -9,7 +9,7 @@ export const CurrentUserProvider = ({ children }) => {
   const [status, setStatus] = useState("loading");
   const [renderHomeFeed, setRenderHomeFeed] = useState(false);
 
-  // Fetch the user data from the API (/me/profile)
+  // Fetch the user profile
   useEffect(() => {
     fetch('http://localhost:31415/api/me/profile')
       .then((res) => res.json())
@@ -18,14 +18,13 @@ export const CurrentUserProvider = ({ children }) => {
         setStatus('idle');
       })
       .catch(() => {
-        console.log('fetch error in CurrentUserContext');
         setStatus('error');
         history.push({
           pathname: '/error-page',
           state: 'An error occured accessing your profile'
         });
       });
-  }, []);
+  }, [history]);
 
   return (
     <CurrentUserContext.Provider value={{currentUser, status, setStatus, renderHomeFeed, setRenderHomeFeed}}>

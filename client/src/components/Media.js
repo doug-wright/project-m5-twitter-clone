@@ -5,13 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 const Media = ({ media }) => {
   return (
     <>
-      {Object.values(media).map(value => {
-        if (value.type === 'img') {
-          return (<Img key={uuidv4} src={value.url} />);
-        }
-        // Put additional conditions for other
-        // types of media
-      })}
+      {Object.values(media).map(value => 
+        <div key={uuidv4}>
+          {value.type === 'img' ? <Img src={value.url} /> : null}
+          {/* add additional media types here */}
+        </div>
+      )}
     </>
   );
 }

@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom'
 
 import { CurrentUserContext } from './CurrentUserContext';
 import { COLORS } from '../constants';
-import Spinner from './Spinner';
 
 const PostTweet = () => {
   const history = useHistory();
@@ -30,6 +29,8 @@ const PostTweet = () => {
       .then((res) => res.json())
       .then((json) => {
         setPostTweetStatus('idle');
+
+        // Force re-render of home feed by toggling state
         if (renderHomeFeed) {
           setRenderHomeFeed(false);
         } else {
@@ -69,7 +70,7 @@ const PostTweet = () => {
       </InputArea>
       <ButtonArea>
         <Counter inputRemaining={inputRemaining}>{inputRemaining}</Counter>
-        <Button onClick={handleClick} disabled={btnDisabled} state={btnDisabled}>
+        <Button tabIndex="0" onClick={handleClick} disabled={btnDisabled} state={btnDisabled}>
           {postTweetStatus === 'loading' ? 'Posting' : 'Meow'}
         </Button>
       </ButtonArea>

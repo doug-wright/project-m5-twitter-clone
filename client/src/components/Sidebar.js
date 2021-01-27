@@ -42,6 +42,11 @@ const Sidebar = () => {
             Bookmarks
           </NavigationLink>
         </LinkContainer>
+        <MeowBtnContainer>
+          <MeowButton>
+            Meow
+          </MeowButton>
+        </MeowBtnContainer>
       </Nav>
     </Wrapper>
   );
@@ -78,6 +83,25 @@ const NavigationLink = styled(NavLink)`
   &.active {
     color: ${COLORS.primary};
   }
+`;
+
+const MeowBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+`;
+
+const MeowButton = styled.button`
+  width: 140px;
+  height: 30px;
+  border-radius: 15px;
+  border: none;
+  background-color: ${COLORS.primary};
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
 `;
 
 export default Sidebar;

@@ -10,6 +10,8 @@ import TweetActions from './TweetActions';
 const TweetItem = ({ tweet }) => {
   const history = useHistory();
 
+  // Function will return a value of a nested object or
+  // undefined if that property does not exist.
   const getNested = (obj, ...args) => {
     return args.reduce((obj, level) => obj && obj[level], obj)
   }
@@ -55,7 +57,7 @@ const TweetItem = ({ tweet }) => {
         <Details>
           <DisplayName target="displayName" tabIndex="0">{tweet.author.displayName}</DisplayName>
           &nbsp;@{tweet.author.handle} - {moment(tweet.timestamp).format('MMM Do')}
-          <p>{tweet.status}</p>
+          <TweetStatus>{tweet.status}</TweetStatus>
         </Details>
       </TweetHeader>
       {(tweet.media.length > 0) ? <Media media={tweet.media}/> : null}
@@ -108,6 +110,7 @@ const AvatarImg = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin-left: 5px;
   margin-right: 10px;
 `;
 
@@ -119,6 +122,10 @@ const Details = styled.div`
 
 const DisplayName = styled.span`
   font-weight: bold;
+`;
+
+const TweetStatus = styled.p`
+  word-wrap: break-word;
 `;
 
 const ActionContainer = styled.div`

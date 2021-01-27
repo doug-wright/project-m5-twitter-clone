@@ -53,7 +53,7 @@ const Profile = () => {
           state: 'An error occured accessing your profile'
         })
       });
-  }, [profileId]);
+  }, [profileId, history]);
 
   const handleButtonClick = (event) => {
     setMenuTab(event.target.id);
@@ -199,7 +199,6 @@ const MapPinIcon = styled(FiMapPin)`
 `;
 
 const CalendarIcon = styled(FiCalendar)`
-  /* margin-left: 17px; */
   margin-right: 7px;
 `;
 

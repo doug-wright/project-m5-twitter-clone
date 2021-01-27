@@ -1,5 +1,5 @@
 import React, { useContext }from 'react';
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import styled from 'styled-components';
 
 import Sidebar from './Sidebar';
@@ -15,8 +15,10 @@ import PostTweet from './PostTweet';
 import { CurrentUserContext } from './CurrentUserContext';
 
 const App = () => {
-  const { currentUser, status } = useContext(CurrentUserContext);
+  const { status } = useContext(CurrentUserContext);
 
+  // Only render the routes if the user profile was
+  // fetched successfully.
   if (status !== 'error') {
   return (
     <Wrapper>
